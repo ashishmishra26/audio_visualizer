@@ -18,17 +18,17 @@ export default class Visualiser extends Component {
       componentDidUpdate() {
         switch (this.props.plotType) {
             case 'line':
-            this.draw();
+            this.drawLine();
             break;
             case 'column':
-            this.draw2()
+            this.drawColumn()
             break;
             default:
-            this.draw()
+            this.drawLine()
         }
       }
     
-      draw() {
+      drawLine() {
         const { audioData } = this.props;
         const canvas = this.canvas.current;
         const height = canvas.height;
@@ -38,7 +38,7 @@ export default class Visualiser extends Component {
         const sliceWidth = (width * 1) / audioData.length;
 
         context.lineWidth = 1;
-        context.strokeStyle = this.getRandomColor() || '#F2B945';
+        context.strokeStyle = this.getRandomColor();
         context.clearRect(0, 0, width, height);
     
         context.beginPath();
@@ -53,7 +53,7 @@ export default class Visualiser extends Component {
         context.stroke();
       }
 
-      draw2() {
+      drawColumn() {
         const { audioData } = this.props;
         const canvas = this.canvas.current;
         const height = canvas.height;

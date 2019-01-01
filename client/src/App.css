@@ -46,6 +46,7 @@
   border: none;
   color: #3A808D;
   cursor: pointer;
+  user-select: none;
 }
 
 .type-btn {
@@ -59,6 +60,7 @@
   outline: none;
   cursor: pointer;
   color: #3A808D;
+  margin-left: 10px;
 }
 
 .fas {
