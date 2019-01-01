@@ -6,18 +6,29 @@ class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      audio: null
+      audio: null,
+      plotType: 'line'
     }
   }
   render() {
     return (
       <div className="App">
         <div className="wrapper">
-         <div className="upper"><button className="mt-auto btn" onClick={()=>{this.toggleMicrophone()}}>
-          {this.state.audio ? 'Stop' : 'Start'}
-         </button></div>
+         <div className="upper">
+          <button className="mt-auto btn" onClick={()=>{this.toggleMicrophone()}}>
+           {this.state.audio ? 'Stop' : 'Start'}
+          </button>
+          <div className="type-container">
+            <button className="mt-auto type-btn" onClick={()=>{this.changePlotType('line')}}>
+              <i className="fas fa-chart-line"></i>
+            </button>
+            <button className="mt-auto type-btn" onClick={()=>{this.changePlotType('column')}}>
+              <i className="fas fa-chart-bar"></i>
+            </button>
+          </div>
+         </div>
          <div className="lower">
-          {this.state.audio ? <Analyser audio={this.state.audio} /> : ''}
+          {this.state.audio ? <Analyser audio={this.state.audio} plotType={this.state.plotType}/> : ''}
          </div>
         </div>
       </div>
@@ -30,6 +41,10 @@ class App extends Component {
     } else {
       this.getMicrophone();
     }
+  }
+
+  changePlotType = (plotType) => {
+    this.setState({'plotType': plotType});
   }
 
   async getMicrophone() {
