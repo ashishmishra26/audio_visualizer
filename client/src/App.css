@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  font-family: 'Roboto'
 }
 
 .App-logo {
@@ -18,15 +20,30 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: #282c34;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.upper {
+  width: 100vw;
+  height: 10vh;
+  background-color: #252f42;
+}
+
+.lower {
+  width: 100vw;
+  height: 90vh;
+}
+
+.btn {
+  width: 100px;
+  height: 5vh;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.mt-auto {
+  margin-top: 2.5vh;
 }
