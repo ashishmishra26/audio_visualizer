@@ -61,6 +61,7 @@
   cursor: pointer;
   color: #3A808D;
   margin-left: 10px;
+  margin-top: 30px !important;
 }
 
 .fas {

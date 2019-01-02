@@ -1,35 +1,39 @@
-import React, { Component } from 'react';
+import React, {
+    Component
+} from 'react';
 
 export default class Visualiser extends Component {
     constructor(props) {
         super(props);
         this.canvas = React.createRef();
         this.state = {
-            plotType: 'line' 
+            plotType: 'line'
         }
         this.resize = this.resize.bind(this);
-      }
+    }
 
-      componentDidMount() {
+    componentDidMount() {
         this.resize();
         window.addEventListener('resize', this.resize);
-      }
+    }
 
-      componentDidUpdate() {
+    componentDidUpdate() {
         switch (this.props.plotType) {
             case 'line':
-            this.drawLine();
-            break;
+                this.drawLine();
+                break;
             case 'column':
-            this.drawColumn()
-            break;
+                this.drawColumn()
+                break;
             default:
-            this.drawLine()
+                this.drawLine()
         }
-      }
-    
-      drawLine() {
-        const { audioData } = this.props;
+    }
+
+    drawLine() {
+        const {
+            audioData
+        } = this.props;
         const canvas = this.canvas.current;
         const height = canvas.height;
         const width = canvas.width;
@@ -40,21 +44,22 @@ export default class Visualiser extends Component {
         context.lineWidth = 1;
         context.strokeStyle = this.getRandomColor();
         context.clearRect(0, 0, width, height);
-    
+
         context.beginPath();
         context.moveTo(0, height / 2);
-        for (let i = 0; i < audioData.length ; i++) {
-          const y = (audioData[i] / 255) * height;
-          context.lineTo(x, y);
+        for (let i = 0; i < audioData.length; i++) {
+            const y = (audioData[i] / 255) * height;
+            context.lineTo(x, y);
             x += sliceWidth;
         }
-
         context.lineTo(x, height / 2);
         context.stroke();
-      }
+    }
 
-      drawColumn() {
-        const { audioData } = this.props;
+    drawColumn() {
+        const {
+            audioData
+        } = this.props;
         const canvas = this.canvas.current;
         const height = canvas.height;
         const width = canvas.width;
@@ -71,28 +76,32 @@ export default class Visualiser extends Component {
         for (let i = 0; i < audioData.length; i++) {
             barHeight = audioData[i] * 6;
             context.fillStyle = '#00000f';
-            context.fillRect(x, height-barHeight / 2, barWidth, barHeight / 2);      
+            context.fillRect(x, height - barHeight / 2, barWidth, barHeight / 2);
             x += barWidth + 1;
         }
         context.stroke();
-      }
+    }
 
-      resize () {
+    resize() {
         const canvas = document.getElementById('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight / 1.16;
-      }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight / 1.16;
+    }
 
-      getRandomColor() {
+    getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+            color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-      }
+    }
 
-      render() {
-        return <div className="visualiser"><canvas id="canvas" ref={this.canvas} /></div>;
-      }
+    render() {
+        return <div className = "visualiser" > < canvas id = "canvas"
+        ref = {
+            this.canvas
+        }
+        /></div > ;
+    }
 }

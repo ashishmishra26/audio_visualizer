@@ -24,8 +24,6 @@ export default class Analyser extends Component {
         this.analyser.smoothingTimeConstant = 1;
         this.source = this.audioContext.createMediaStreamSource(this.props.audio);
 
-
-
         this.source.connect(this.analyser);
         this.analyser.connect(this.distortion);
         this.distortion.connect(this.biquadFilter);
