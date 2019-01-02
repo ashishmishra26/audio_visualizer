@@ -1,0 +1,23 @@
+{
+  "name": "audio_visualizer",
+  "version": "1.0.0",
+  "description": "An app which uses web audio api to visualize imput music.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashishmishra26/audio_visualizer.git"
+  },
+  "keywords": [
+    "Audio",
+    "visualizer"
+  ],
+  "author": "Ashish Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashishmishra26/audio_visualizer/issues"
+  },
+  "homepage": "https://github.com/ashishmishra26/audio_visualizer#readme"
+}
