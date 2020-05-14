@@ -1,7 +1,7 @@
 import React, {
     Component
 } from 'react';
-import Visualiser from './Visualiser';
+import Visualiser from '../Visualiser/Visualiser';
 
 export default class Analyser extends Component {
     constructor(props) {
