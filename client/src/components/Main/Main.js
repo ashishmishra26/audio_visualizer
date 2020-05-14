@@ -1,40 +1,42 @@
 import React, {useState, useRef, useEffect, useCallback} from 'react';
 
+// components
+import Analyser from '../Analyser/Analyser';
+
 // constants & utils
 import {plotMap} from '../../constants';
 import { getUserAudioInput, stopUserAudioInput } from '../../utils';
 
-export default function Main() {
-  const [plotType, setPlotType] = useState(undefined);
-  const audioInput = useRef(null);
+// css & media
+import './Main.css';
 
-  const toggleMicrophone = () => {
+export default function Main() {
+  const [audioInput, setAudioInput] = useState(false); 
+  const [plotType, setPlotType] = useState(plotMap.LINE);
+
+  const getMicrophone = useCallback(async () => {
+    setAudioInput(await getUserAudioInput());
+  }, []);
+
+  const stopMicrophone = useCallback(() => {
+    stopUserAudioInput(audioInput);
+    setAudioInput(null);
+  }, [audioInput]);
+  
+  const toggleMicrophone = useCallback(() => {
     if (audioInput) {
       stopMicrophone();
     } else {
       getMicrophone();
     }
-  }
-  
-  const getMicrophone = async () => {
-    audioInput.current = await getUserAudioInput();
-  }
-  
-  const stopMicrophone = () => {
-    stopUserAudioInput(audioInput.current);
-    audioInput.current = null;
-  }
-
-  useEffect(() => {
-    getMicrophone();
-  }, [])
+  }, [audioInput]);
 
   return (
     <div className="wrapper">
       <div className="upper">
-        {/* <button className="mt-auto btn" onClick={()=>{this.toggleMicrophone()}}>
-          {this.state.audio ? 'Stop' : 'Start'}
-        </button> */}
+        <button className="mt-auto btn" onClick={toggleMicrophone}>
+          {audioInput ? 'Stop' : 'Start'}
+        </button>
         <div className="type-container">
           <button className="mt-auto type-btn" onClick={() => { setPlotType(plotMap.LINE); }}>
             <i className="fas fa-chart-line"></i>
@@ -44,7 +46,14 @@ export default function Main() {
           </button>
         </div>
       </div>
-      <Analyser audio={this.state.audio} plotType={this.state.plotType}/>
+      {
+        audioInput ?
+          <Analyser
+            audio={audioInput}
+            plotType={plotType}
+          /> 
+        : null
+      }
     </div>
   )
 }
