@@ -3,10 +3,11 @@ import React, {useRef, useEffect, useCallback} from 'react';
 import { plotMap } from '../../constants';
 import { getRandomColor } from '../../utils';
 
-import '../Main/Main';
+import '../Visualiser/Visualiser.css';
 
 export default function Visualiser(props) {
     const canvasRef = useRef(null);
+    const wrapperRef = useRef(null);
 
     const drawLine = useCallback(() => {
         const canvas = canvasRef.current;
@@ -67,21 +68,17 @@ export default function Visualiser(props) {
         }
     }, [props.plotType, drawColumn, drawLine]);
 
+    // resize event
     useEffect(() => {
-        resize();
-        window.addEventListener('resize', resize);
-    }, []);
-
-    const resize = () => {
+        const wrapper = wrapperRef.current;
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight / 1.16;
-    }
+        canvas.width = wrapper.clientWidth;
+        canvas.height = wrapper.clientHeight;
+    }, [window.innerWidth, window.innerHeight]);
 
     return (
-        <>
-            <div>Hi</div>
-            <canvas id="canvas" ref={canvasRef} />
-        </>
+        <div className="visualiser" ref={wrapperRef}>
+            <canvas className="canvas" ref={canvasRef} />
+        </div>
     )
 }
