@@ -1,25 +1,14 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useCallback} from 'react';
 
 import { plotMap } from '../../constants';
 import { getRandomColor } from '../../utils';
 
+import '../Main/Main';
+
 export default function Visualiser(props) {
     const canvasRef = useRef(null);
 
-    useEffect(() => {
-        switch (props.plotType) {
-            case plotMap.LINE:
-                drawLine();
-                break;
-            case plotMap.BAR:
-                drawColumn()
-                break;
-            default:
-                drawLine()
-        }
-    }, [props.plotType]);
-
-    const drawLine = () => {
+    const drawLine = useCallback(() => {
         const canvas = canvasRef.current;
         const height = canvas.clientHeight;
         const width = canvas.clientWidth;
@@ -40,9 +29,9 @@ export default function Visualiser(props) {
         }
         context.lineTo(x, height / 2);
         context.stroke();
-    }
+    }, [props.audioData]);
 
-    const drawColumn = () => {
+    const drawColumn = useCallback(() => {
         const canvas = canvasRef.current;
         const height = canvas.clientHeight;
         const width = canvas.clientWidth;
@@ -63,9 +52,36 @@ export default function Visualiser(props) {
             x += barWidth + 1;
         }
         context.stroke();
-    };
+    }, [props.audioData]);
+
+    useEffect(() => {
+        switch (props.plotType) {
+            case plotMap.LINE:
+                drawLine();
+                break;
+            case plotMap.BAR:
+                drawColumn()
+                break;
+            default:
+                drawLine()
+        }
+    }, [props.plotType, drawColumn, drawLine]);
+
+    useEffect(() => {
+        resize();
+        window.addEventListener('resize', resize);
+    }, []);
+
+    const resize = () => {
+        const canvas = canvasRef.current;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight / 1.16;
+    }
 
     return (
-        <canvas id="canvas" ref={canvasRef} />
+        <>
+            <div>Hi</div>
+            <canvas id="canvas" ref={canvasRef} />
+        </>
     )
 }

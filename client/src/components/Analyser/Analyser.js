@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Visualiser from '../Visualiser/Visualiser';
 
 export default function Analyser(props) {
@@ -9,14 +9,10 @@ export default function Analyser(props) {
     const controller = useRef({});
     const rAfId = useRef(null);
 
-    const tick = () => {
+    const tick = useCallback(() => {
         controller.current.analyser.getByteTimeDomainData(controller.current.dataArray);
-
-        console.log('tick');
-        setAudioData(controller.current.dataArray);
-
-        rAfId.current = requestAnimationFrame(tick);
-    };
+        setAudioData([...controller.current.dataArray]);
+    }, []);
 
     useEffect(() => {
         // instantiate audio content
@@ -56,14 +52,16 @@ export default function Analyser(props) {
             dataArray,
         };
 
-        rAfId.current = requestAnimationFrame(tick);
-
         return () => {
             cancelAnimationFrame(rAfId.current);
             controller.current.analyser.disconnect();
             controller.current.source.disconnect();
         }
-    }, []);
+    }, [props.audio, tick]);
+
+    useEffect(() => {
+        rAfId.current = requestAnimationFrame(tick);
+    }, [audioData, tick]);
 
     return (
         <Visualiser 

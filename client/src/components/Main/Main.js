@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 
 // components
 import Analyser from '../Analyser/Analyser';
@@ -29,7 +29,7 @@ export default function Main() {
     } else {
       getMicrophone();
     }
-  }, [audioInput]);
+  }, [audioInput, getMicrophone, stopMicrophone]);
 
   return (
     <div className="wrapper">
