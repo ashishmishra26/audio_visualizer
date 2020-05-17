@@ -1,4 +1,6 @@
-import React, {useRef, useEffect, useCallback} from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
+
+import TypeSelector from  '../TypeSelector/TypeSelector';
 
 import { plotMap } from '../../constants';
 import { getRandomColor } from '../../utils';
@@ -6,6 +8,7 @@ import { getRandomColor } from '../../utils';
 import '../Visualiser/Visualiser.css';
 
 export default function Visualiser(props) {
+    const [plotType, setPlotType] = useState(plotMap.LINE);
     const canvasRef = useRef(null);
     const wrapperRef = useRef(null);
 
@@ -18,7 +21,7 @@ export default function Visualiser(props) {
         const sliceWidth = (width * 1) / props.audioData.length;
 
         context.lineWidth = 1;
-        context.strokeStyle = getRandomColor();
+        context.strokeStyle = '#3E4E50';
         context.clearRect(0, 0, width, height);
 
         context.beginPath();
@@ -47,16 +50,17 @@ export default function Visualiser(props) {
         context.beginPath();
 
         for (let i = 0; i < props.audioData.length; i++) {
-            barHeight = props.audioData[i] * 6;
-            context.fillStyle = '#00000f';
+            barHeight = props.audioData[i] * 2;
+            context.fillStyle = '#3E4E50';
             context.fillRect(x, height - barHeight / 2, barWidth, barHeight / 2);
-            x += barWidth + 1;
+            x += barWidth + 4;
         }
+
         context.stroke();
     }, [props.audioData]);
 
     useEffect(() => {
-        switch (props.plotType) {
+        switch (plotType) {
             case plotMap.LINE:
                 drawLine();
                 break;
@@ -66,7 +70,7 @@ export default function Visualiser(props) {
             default:
                 drawLine()
         }
-    }, [props.plotType, drawColumn, drawLine]);
+    }, [plotType, drawColumn, drawLine]);
 
     // resize event
     useEffect(() => {
@@ -78,6 +82,9 @@ export default function Visualiser(props) {
 
     return (
         <div className="visualiser" ref={wrapperRef}>
+            <TypeSelector 
+                setPlotType={setPlotType}
+            />
             <canvas className="canvas" ref={canvasRef} />
         </div>
     )

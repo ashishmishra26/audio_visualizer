@@ -6,7 +6,6 @@ import TypeSelector from '../TypeSelector/TypeSelector';
 import Switch from '@material-ui/core/Switch';
 
 // constants & utils
-import {plotMap} from '../../constants';
 import { getUserAudioInput, stopUserAudioInput } from '../../utils';
 
 // css & media
@@ -14,7 +13,6 @@ import './Main.css';
 
 export default function Main() {
   const [audioInput, setAudioInput] = useState(false); 
-  const [plotType, setPlotType] = useState(plotMap.LINE);
 
   const getMicrophone = useCallback(async () => {
     setAudioInput(await getUserAudioInput());
@@ -44,14 +42,10 @@ export default function Main() {
           inputProps={{ 'aria-label': 'primary controller' }}
         />
       </div>
-      <TypeSelector 
-        setPlotType={setPlotType}
-      />
       {
         audioInput ?
           <Analyser
             audio={audioInput}
-            plotType={plotType}
           /> 
         : null
       }

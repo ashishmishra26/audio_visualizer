@@ -28,7 +28,7 @@ export default function Analyser(props) {
         const convolver = audioCntxt.createConvolver();
 
         // intialise analyser config
-        analyser.fftSize = 512;
+        analyser.fftSize = Math.pow(2, 12);
         analyser.minDecibels = -31;
         analyser.smoothingTimeConstant = 1;
 
