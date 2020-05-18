@@ -64,7 +64,7 @@ export default function Analyser(props) {
     }, [audioData, tick]);
 
     return (
-        <Visualiser 
+        <Visualiser
             audioData={audioData}
             plotType={props.plotType}
         />

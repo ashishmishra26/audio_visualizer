@@ -1,9 +1,9 @@
 import React, {useState, useCallback} from 'react';
 
 // components
+import Header from '../Header/Header';
 import Analyser from '../Analyser/Analyser';
 import TypeSelector from '../TypeSelector/TypeSelector';
-import Switch from '@material-ui/core/Switch';
 
 // constants & utils
 import { getUserAudioInput, stopUserAudioInput } from '../../utils';
@@ -33,15 +33,10 @@ export default function Main() {
 
   return (
     <div className="wrapper">
-      <div className="switch-wrapper">
-        <Switch
-          checked={Boolean(audioInput)}
-          onChange={toggleMicrophone}
-          color="default"
-          name="controller"
-          inputProps={{ 'aria-label': 'primary controller' }}
-        />
-      </div>
+      <Header 
+        audioInput={audioInput}
+        toggleMicrophone={toggleMicrophone}
+      />
       {
         audioInput ?
           <Analyser

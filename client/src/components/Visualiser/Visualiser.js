@@ -50,7 +50,7 @@ export default function Visualiser(props) {
         context.beginPath();
 
         for (let i = 0; i < props.audioData.length; i++) {
-            barHeight = props.audioData[i] * 2;
+            barHeight = props.audioData[i] * 3;
             context.fillStyle = '#3E4E50';
             context.fillRect(x, height - barHeight / 2, barWidth, barHeight / 2);
             x += barWidth + 4;
@@ -72,13 +72,12 @@ export default function Visualiser(props) {
         }
     }, [plotType, drawColumn, drawLine]);
 
-    // resize event
     useEffect(() => {
         const wrapper = wrapperRef.current;
         const canvas = canvasRef.current;
         canvas.width = wrapper.clientWidth;
-        canvas.height = wrapper.clientHeight;
-    }, [window.innerWidth, window.innerHeight]);
+        canvas.height = wrapper.clientHeight - 56;
+    }, []);
 
     return (
         <div className="visualiser" ref={wrapperRef}>
